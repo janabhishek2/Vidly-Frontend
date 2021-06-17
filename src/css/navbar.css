@@ -1,0 +1,21 @@
+.nav-color {
+  background-color: slateblue;
+}
+#navLink {
+  color: white;
+  font-weight: bolder;
+  padding: 10px;
+}
+#navLink:hover {
+  color: slateblue;
+  background-color: white;
+  font-weight: bolder;
+}
+
+.navbar {
+  line-height: 2.5;
+  font-family: "lato";
+  margin: 0px !important;
+  padding: 0px !important;
+  max-height: 20%;
+}

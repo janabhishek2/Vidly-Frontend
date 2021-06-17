@@ -1,0 +1,30 @@
+#title {
+  font-weight: bolder;
+  color: cornflowerblue;
+}
+.modal .modal-header {
+  background-color: #0356fc;
+  color: floralwhite;
+}
+.modal .modal-header .close {
+  color: floralwhite;
+}
+#genreTitle {
+  color: darkslateblue;
+  font-weight: bolder;
+  font-size: 1.25em;
+  margin: 10px 0px;
+}
+#desc {
+  margin: 20px 0px;
+}
+#anchor {
+  text-decoration: none;
+  font-weight: bolder;
+  color: cornflowerblue;
+}
+#anchor:hover {
+  text-decoration: none;
+  font-weight: bolder;
+  color: cornflowerblue;
+}

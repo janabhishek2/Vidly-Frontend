@@ -1,0 +1,12 @@
+.title {
+  margin-top: 100px;
+  color: slateblue;
+  font-size: 30;
+  font-weight: bold;
+}
+
+.genre-title {
+  font-size: 25;
+  font-weight: bold;
+  color: blue;
+}
