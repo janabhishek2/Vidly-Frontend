@@ -28,3 +28,32 @@
   font-weight: bolder;
   color: cornflowerblue;
 }
+
+#ratingHeading {
+  font-size: 35px;
+  margin-top: 20px;
+
+  font-style: italic;
+  color: black;
+}
+#noRatings {
+  font-size: larger;
+  font-style: italic;
+  color: red;
+}
+#reviewMovieForm {
+  font-size: larger;
+  padding: 20px;
+
+  border-bottom: 1px solid lightgray;
+}
+#del {
+  color: red;
+  font-size: 25px;
+}
+#del:hover {
+  cursor: pointer;
+}
+#comments {
+  margin-left: 15px;
+}

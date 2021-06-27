@@ -1,0 +1,28 @@
+#newReleases {
+  display: flex;
+  flex-direction: row;
+  color: purple;
+
+  font-style: italic;
+}
+
+#newReleases:before,
+#newReleases:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid lightgray;
+  margin: auto;
+  padding: 0px 50px;
+}
+#image {
+  cursor: pointer;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+#image:hover {
+  border: 2px solid purple;
+}
+#starImageSlider {
+  font-size: 20px;
+  margin: 10px 5px;
+}

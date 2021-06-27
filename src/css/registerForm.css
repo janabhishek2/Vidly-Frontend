@@ -1,0 +1,7 @@
+#registerForm {
+  padding: 50px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  min-height: 400px;
+  margin-top: 60px;
+}

@@ -3,7 +3,7 @@ class ListGroup extends Component {
   render() {
     const genres = this.props.genres;
     return (
-      <div className="list-group">
+      <div className="list-group ">
         <button
           style={{ cursor: "pointer" }}
           className={

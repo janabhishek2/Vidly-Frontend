@@ -13,6 +13,9 @@ import { getMovies, deleteMovie } from "../services/movieService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import LatestImageSlider from "./latestImageSlider";
+import TopRatedImageSlider from "./topRatedImageSlider";
+
 class Movies extends Component {
   state = {
     movies: [],
@@ -176,9 +179,17 @@ class Movies extends Component {
         <ToastContainer />
         <div className="container mt-5" id="content">
           <div className="row">
-            <div className="col-2">{this.renderListGroup()}</div>
-            <div className="col-10">{this.renderMovies()}</div>
+            <div className="col-12 col-md-2 d-none d-md-block">
+              {this.renderListGroup()}
+            </div>
+            <div className="col-12 col-md-10 mb-5">{this.renderMovies()}</div>
           </div>
+        </div>
+        <div className="container-fluid">
+          <LatestImageSlider user={this.props.user} {...this.props} />
+        </div>
+        <div className="container-fluid">
+          <TopRatedImageSlider user={this.props.user} {...this.props} />
         </div>
       </React.Fragment>
     );

@@ -1,9 +1,8 @@
-#footer {
-  position: relative;
-  height: 20vw;
-}
-
 #aboutUs {
   width: 100%;
   min-height: 10%;
+}
+
+#main {
+  min-height: 700px;
 }

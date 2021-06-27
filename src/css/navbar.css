@@ -1,5 +1,5 @@
 .nav-color {
-  background-color: slateblue;
+  background-color: #5a0bff;
 }
 #navLink {
   color: white;
@@ -11,7 +11,9 @@
   background-color: white;
   font-weight: bolder;
 }
-
+#navbarToggler {
+  border: 1px solid black;
+}
 .navbar {
   line-height: 2.5;
   font-family: "lato";

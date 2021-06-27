@@ -1,0 +1,14 @@
+#review {
+  padding: 10px;
+  margin: 10px 0px;
+  border-bottom: 1px solid gray;
+}
+#reviews {
+  margin-top: 10px;
+}
+#reviewsHeading {
+  font-style: italic;
+  font-size: larger;
+  font-weight: bolder;
+  color: purple;
+}

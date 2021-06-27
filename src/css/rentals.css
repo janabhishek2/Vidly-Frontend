@@ -1,0 +1,14 @@
+#star {
+  font-size: 25px;
+  margin: 10px 5px;
+}
+#star:hover {
+  cursor: pointer;
+}
+#description {
+  font-size: larger;
+  font-style: italic;
+}
+#comments {
+  margin-top: 20px;
+}

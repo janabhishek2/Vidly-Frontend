@@ -7,21 +7,26 @@ class Footer extends Component {
     return (
       <div className="container-fluid" id="footer">
         <div className="row">
-          <div className="col-3 offset-1">
-            <h3>Links</h3>
-            <div>
-              <ul type="disc">
-                <li>
-                  <Link to="/movies">Home</Link>
-                </li>
-                <li>
-                  <Link to="/">Rentals</Link>
-                </li>
-                <li>
-                  <Link to="/profile">Settings</Link>
-                </li>
-              </ul>
-            </div>
+          <div className="col offset-3 offset-md-5 ">
+            <a target="_blank" href="https://github.com/janabhishek2">
+              <span id="fontIcon" className="fa fa-github">
+                {" "}
+              </span>
+            </a>
+            <a target="_blank" href="http://www.facebook.com/profile.php?id=">
+              <span id="fontIcon" className="fa fa-facebook ">
+                {" "}
+              </span>
+            </a>
+            <a target="_blank" href="http://www.linkedin.com/in/">
+              <span id="fontIcon" className="fa fa-linkedin ">
+                {" "}
+              </span>
+            </a>
+
+            <a target="_blank" href="mailto:janabhishek2@gmail.com">
+              <span id="fontIcon" className="fa fa-envelope"></span>
+            </a>
           </div>
         </div>
       </div>

@@ -1,0 +1,9 @@
+#profile {
+  font-family: "Verdana";
+  padding: 0px;
+}
+#background {
+  background-image: url("https://images.unsplash.com/photo-1520942702018-0862200e6873?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
+  background-color: beige;
+  border-radius: 5px;
+}

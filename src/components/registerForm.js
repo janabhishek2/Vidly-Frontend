@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 import Input from "./common/input";
 import * as userService from "../services/userService";
+import "../css/registerForm.css";
 
 class RegisterForm extends Component {
   state = {
@@ -83,7 +84,7 @@ class RegisterForm extends Component {
   render() {
     const { user, errors } = this.state;
     return (
-      <div>
+      <div id="registerForm">
         <h1>Register</h1>
         <br />
         <form onSubmit={this.handleSubmit}>

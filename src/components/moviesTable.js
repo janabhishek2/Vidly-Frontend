@@ -4,6 +4,9 @@ import { Link, Redirect } from "react-router-dom";
 import SearchMovies from "./searchMovies";
 
 import "../css/movieForm.css";
+import DisplayRatings from "./common/displayRatings";
+import DisplayReviews from "./common/displayReviews";
+import connString from "../services/connUrl";
 class MoviesTable extends Component {
   state = {
     showModal: false,
@@ -14,6 +17,11 @@ class MoviesTable extends Component {
     if (this.props.sortOrder.order == "asc") {
       return "fa fa-sort-asc";
     } else return "fa fa-sort-desc";
+  };
+  getTableAlertClass = (movie) => {
+    if (movie.numberInStock == 0) {
+      return "table-danger";
+    } else return "";
   };
   renderTitle = (movie) => {
     if (
@@ -43,8 +51,17 @@ class MoviesTable extends Component {
                   </button>
                 </div>
                 <div className="modal-body">
+                  <div id="movieTile" className="d-flex justify-content-center">
+                    <img
+                      src={connString.imageUrl + movie.tile}
+                      alt="Sample Tile"
+                      width="50%"
+                      height="50%"
+                      className="img-thumbnail"
+                    />
+                  </div>
+                  <DisplayRatings movie={movie} />
                   <div id="genreTitle">{movie.genre.name}</div>
-
                   <div id="desc">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -55,17 +72,26 @@ class MoviesTable extends Component {
                     occaecat cupidatat non proident, sunt in culpa qui officia
                     deserunt mollit anim id est laborum
                   </div>
+                  <div>
+                    <DisplayReviews movie={movie} />
+                  </div>
                 </div>
                 <div className="modal-footer">
                   {
                     <button
                       onClick={() => {
-                        if (Object.keys(this.props.user).length == 0) {
+                        if (
+                          this.props.user == undefined ||
+                          Object.keys(this.props.user).length == 0
+                        ) {
                           this.props.history.push("/loginForm");
                           return;
                         } else {
                           this.props.history.push(
-                            "/checkout/" + this.props.user._id + "/" + movie._id
+                            "/paymentMethods/" +
+                              this.props.user._id +
+                              "/" +
+                              movie._id
                           );
                           return;
                         }
@@ -158,7 +184,7 @@ class MoviesTable extends Component {
           <tbody>
             {paginatedMovies.map((movie) => {
               return (
-                <tr key={movie._id}>
+                <tr key={movie._id} className={this.getTableAlertClass(movie)}>
                   <td>{this.renderTitle(movie)}</td>
                   <td>{movie.genre.name}</td>
                   <td>{movie.numberInStock}</td>
@@ -196,7 +222,7 @@ class MoviesTable extends Component {
                       <td>
                         <Link
                           to={
-                            "/checkout" +
+                            "/paymentMethods" +
                             "/" +
                             this.props.user._id +
                             "/" +

@@ -1,8 +1,11 @@
 #footer {
-  background-color: rgb(107, 6, 240);
+  position: relative;
+  background-color: #211661;
   color: white;
   line-height: 2em;
   padding: 20px;
+  margin-top: 20px;
+  min-height: 100px;
 }
 li > a {
   color: white;
@@ -11,4 +14,8 @@ li > a {
 li > a:hover {
   color: goldenrod;
   text-decoration: none;
+}
+#fontIcon {
+  font-size: 25px;
+  padding: 20px;
 }

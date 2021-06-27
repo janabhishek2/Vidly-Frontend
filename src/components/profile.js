@@ -4,6 +4,9 @@ import { getUserById, updateUser } from "../services/userService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Joi from "joi-browser";
+import "../css/profile.css";
+import connString from "../services/connUrl";
+import axios from "axios";
 class Profile extends Component {
   state = {
     user: {
@@ -15,9 +18,12 @@ class Profile extends Component {
       city: "",
       country: "",
       zip: "",
+      avtar: "",
     },
+
     errors: {},
     disabled: true,
+    uploadedPercentage: 0,
   };
   userSchema = {
     name: Joi.string().min(1).max(10).required(),
@@ -28,6 +34,7 @@ class Profile extends Component {
     city: Joi.string().min(0).max(20).allow(""),
     country: Joi.string().min(0).max(20).allow(""),
     zip: Joi.string().min(6).max(6).allow(""),
+    avtar: Joi.allow(null).allow(""),
   };
   async componentDidMount() {
     try {
@@ -43,6 +50,7 @@ class Profile extends Component {
           "city",
           "country",
           "zip",
+          "avtar",
         ]),
       });
     } catch (err) {
@@ -82,9 +90,48 @@ class Profile extends Component {
     }
     //call server
     try {
-      const out = await updateUser(this.props.match.params.id, this.state.user);
+      const fd = new FormData();
+
+      if (typeof this.state.user.avtar === typeof "") {
+      } else {
+        fd.append("avtar", this.state.user.avtar, this.state.user.avtar.name);
+      }
+
+      fd.append("name", this.state.user.name);
+      fd.append("email", this.state.user.email);
+      fd.append("phone", this.state.user.phone);
+      fd.append("addr1", this.state.user.addr1);
+      fd.append("addr2", this.state.user.addr2);
+      fd.append("city", this.state.user.city);
+      fd.append("country", this.state.user.country);
+      fd.append("zip", this.state.user.zip);
+
+      const options = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          const percent = (loaded / total) * 100;
+
+          if (percent < 100) {
+            this.setState({ uploadedPercentage: percent });
+          }
+          console.log(loaded, total);
+        },
+      };
+
+      const out = await axios.put(
+        connString.url + "users/" + this.props.match.params.id,
+        fd,
+        options
+      );
+      this.setState({ uploadedPercenatage: 100 });
+
+      console.log(out);
       if (out.status == 200) {
-        toast.success("Data Updated Successfully ! ");
+        toast.success("Data Updated Successfully !  ");
+        setTimeout(() => {
+          window.location = "/movies";
+        }, 3000);
+        return;
       }
     } catch (err) {
       toast.error(
@@ -93,31 +140,46 @@ class Profile extends Component {
       console.log(err.message);
     }
   };
+  handleAvtarChange = ({ target: fname }) => {
+    const user = { ...this.state.user };
+    user.avtar = fname.files[0];
+
+    this.setState({ user });
+  };
   render() {
     return (
       <React.Fragment>
         <ToastContainer />
-        <div className="row">
+        <div id="profile" className="row">
           <div className="col-1"></div>
           <div className="col-10">
             <div className="card mb-5">
-              <div
-                style={{ backgroundColor: "seashell" }}
-                className="card-header"
-              >
+              <div id="background" className="card-header">
                 <div className="row d-flex justify-content-center">
-                  <img
-                    className="img-rounded"
-                    src="https://uploads-ssl.webflow.com/6030077fdbd53858ff7c4765/603c1ac00b9e8a080528b4ae_SalonBrillareGenericProfileAvi.jpg"
-                    style={{
-                      borderRadius: "500px",
-                      width: "30%",
-                      height: "30%",
-                    }}
-                  />
+                  {this.state.user.avtar == "" ? (
+                    <img
+                      className="img-rounded "
+                      src="https://uploads-ssl.webflow.com/6030077fdbd53858ff7c4765/603c1ac00b9e8a080528b4ae_SalonBrillareGenericProfileAvi.jpg"
+                      style={{
+                        borderRadius: "50%",
+                        width: "30%",
+                        height: "30%",
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="img-thumbnail "
+                      src={connString.imageUrl + this.state.user.avtar}
+                      style={{
+                        margin: "25px",
+                        width: "30%",
+                        height: "30%",
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="row justify-content-center">
-                  <div className="mt-3 ">
+                  <div className="mt-3 mb-5">
                     <button
                       className="btn btn-info"
                       onClick={this.handleEditProfile}
@@ -134,12 +196,29 @@ class Profile extends Component {
                   </div>
                 </div>
               </div>
-              <div className="card-body">
-                <form onSubmit={this.onSubmit}>
+              <div id="profileData" className="card-body">
+                <form enctype="multipart/form-data" onSubmit={this.onSubmit}>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="name">Name : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="avtar">Avtar </label>
+                      </div>
+                      <div className="col">
+                        <div className="form-control">
+                          <input
+                            type="file"
+                            name="avtar"
+                            onChange={this.handleAvtarChange}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <div className="row">
+                      <div className="col-2 mt-2">
+                        <label htmlFor="name">Name </label>
                       </div>
                       <div className="col">
                         <input
@@ -161,8 +240,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="email">Email : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="email">Email </label>
                       </div>
                       <div className="col">
                         <input
@@ -184,8 +263,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="phone">Phone : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="phone">Phone </label>
                       </div>
                       <div className="col">
                         <input
@@ -207,8 +286,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="addr1">Address Line1 : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="addr1">Address 1 </label>
                       </div>
                       <div className="col">
                         <input
@@ -230,8 +309,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="addr2">Address Line 2 : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="addr2">Address 2 </label>
                       </div>
                       <div className="col">
                         <input
@@ -253,8 +332,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="city">City : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="city">City </label>
                       </div>
                       <div className="col">
                         <input
@@ -276,8 +355,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="country">Country : </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="country">Country </label>
                       </div>
                       <div className="col">
                         <input
@@ -299,8 +378,8 @@ class Profile extends Component {
                   </div>
                   <div className="form-group">
                     <div className="row">
-                      <div className="col-2">
-                        <label htmlFor="zip">Zip: </label>
+                      <div className="col-2 mt-2">
+                        <label htmlFor="zip">Zip </label>
                       </div>
                       <div className="col">
                         <input

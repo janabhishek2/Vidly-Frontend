@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import { getMovie } from "../services/movieService";
 import { saveRental } from "./../services/rentalService";
 import StripeCheckout from "react-stripe-checkout";
@@ -6,6 +7,7 @@ import "../css/checkout.css";
 import { saveInvoice } from "./../services/invoiceService";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 import { result } from "lodash";
 class CheckOut extends Component {
   state = {
@@ -31,11 +33,10 @@ class CheckOut extends Component {
   };
   handleToken = async (token) => {
     try {
-      console.log(token);
       const { userId, movieId } = this.props.match.params;
 
       const ans = await saveRental(token, userId, movieId);
-      console.log(ans);
+
       if (ans.status == 200) {
         toast.success("Transaction Successful !");
         setTimeout(() => {
@@ -100,10 +101,7 @@ class CheckOut extends Component {
                     amount={this.state.movie.dailyRentalRate * 30 * 100}
                     name={this.state.movie.title}
                     email={this.props.user.email}
-                    currency="inr"
-                    alipay
-                    bitcoin
-                    allowRememberMe
+                    currency="INR"
                   >
                     <button className="btn mt-3 btn-warning">
                       Rent for 30 days
